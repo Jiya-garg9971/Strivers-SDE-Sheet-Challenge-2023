@@ -1,0 +1,14 @@
+#include<bits/stdc++.h>
+int helper(vector<int> &values, vector<int> &weights, int n, int w,int i,vector<vector<int>> &dp){
+	if(i==n)return 0;
+	if(dp[i][w])return dp[i][w];
+	int ntake=helper(values,weights,n,w,i+1,dp);
+	int take=0;
+	if(weights[i]<=w)take=values[i]+helper(values,weights,n,w-weights[i],i+1,dp);
+	return dp[i][w]=max(take,ntake);
+}
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w)
+{
+	vector<vector<int>> dp(n,vector<int>(1+w,0));
+	return helper(values,weights,n,w,0,dp);
+}
